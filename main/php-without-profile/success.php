@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['Username'])) {
+    header("Location: index.php"); // Redirect if accessed directly without signing up
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

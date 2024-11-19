@@ -1,3 +1,6 @@
+<?php
+session_start(); // Start session to access login state
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +13,18 @@
     <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
-    <header>
+<header>
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="shop.php">Shop</a></li>
                 <li><a href="cart.php">Cart</a></li>
-                <li><a href="#about-us">About</a></li>
-                <li><a href="login.php">Log In/Sign Up</a></li>
+                <li><a href="index.php#about-us">About</a></li>
+                <?php if (isset($_SESSION['Username'])): ?>
+                    <li><a href="account.php">Account</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Log In/Sign Up</a></li>
+                <?php endif; ?>
             </ul>
             <div class="logo">
                 <img src="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" alt="Hero Image">
@@ -88,5 +95,7 @@
         <p class="footer-bottom">For educational purposes only</p>
         <p class="footer-bottom">&copy;2024 Cuddle Paws. All rights reserved.</p>
     </footer>
+    <script src="../js/updatedNav.js"></script>
+
 </body>
 </html>

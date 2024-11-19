@@ -1,4 +1,5 @@
 <?php
+session_start(); // Start session to store login state
 $servername = "localhost"; 
 $username = "root"; 
 $password = "";
@@ -8,9 +9,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-}
-else {
-    echo 'successfully';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,12 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $barangay = $_POST['Barangay'];
     $phase = $_POST['Phase'];
     $username = $_POST['Username'];
-    $password = password_hash($_POST['Password'], PASSWORD_DEFAULT); // Password hashing for security
+    $password = password_hash($_POST['Password'], PASSWORD_DEFAULT); // Password hashing
 
     $stmt = $conn->prepare("INSERT INTO Users (Firstname, Lastname, Email, Phone_Num, Municipality, Barangay, Phase, Username, Password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssssss", $firstname, $lastname, $email, $phone_num, $municipality, $barangay, $phase, $username, $password);
 
     if ($stmt->execute()) {
+        // Set session for the logged-in user
+        $_SESSION['Username'] = $username;
         // Redirect to success page
         header("Location: success.php");
         exit();
@@ -47,11 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
+    <title>Cuddle Paws Sign Up</title>
     <link rel="stylesheet" href="../css/signup.css">
     <link rel="stylesheet" href="../css/header.css">
-    <title>Cuddle Paws Sign Up</title>
-    <style>
-    </style>
 </head>
 <body>
     <header>
@@ -61,7 +59,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li><a href="shop.php">Shop</a></li>
                 <li><a href="cart.php">Cart</a></li>
                 <li><a href="index.php#about-us">About</a></li>
-                <li><a href="login.php">Log In/Sign Up</a></li>
+                <?php if (isset($_SESSION['Username'])): ?>
+                    <li><a href="account.php">Account</a></li>
+                    <li><a href="logout.php">Log Out</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Log In/Sign Up</a></li>
+                <?php endif; ?>
             </ul>
             <div class="logo">
                 <img src="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" alt="Hero Image">

@@ -1,8 +1,10 @@
 <?php
 session_start();
+$isLoggedIn = isset($_SESSION['user_id']); // Check if the user is logged in
 
 // Retrieve the cart from the session, if it exists
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+
 
 // Initialize an array to store selected items
 $selectedItems = [];
@@ -36,7 +38,12 @@ $subtotal = 0;
                 <li><a href="shop.php">Shop</a></li>
                 <li><a href="cart.php">Cart</a></li>
                 <li><a href="index.php#about-us">About</a></li>
-                <li><a href="login.php">Log In/Sign Up</a></li>
+                <?php if (isset($_SESSION['Username'])): ?>
+                    <li><a href="account.php">Account</a></li>
+                    <li><a href="logout.php">Log Out</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Log In/Sign Up</a></li>
+                <?php endif; ?>
             </ul>
             <div class="logo">
                 <img src="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" alt="Hero Image">
