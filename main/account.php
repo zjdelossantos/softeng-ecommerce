@@ -15,24 +15,26 @@ if ($conn->connect_error) {
 }
 
 // Use a prepared statement for secure querying
-$stmt = $conn->prepare("SELECT * FROM users WHERE Username = ?");
+// Query to fetch user data
+$stmt = $conn->prepare("SELECT Firstname, Lastname, Email, Phone_num, Municipality, Barangay, Phase FROM users WHERE Username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
-
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
-    $firstname = isset($user['FirstName']) ? htmlspecialchars($user['FirstName']) : 'Not Provided';
-    $lastname = isset($user['LastName']) ? htmlspecialchars($user['LastName']) : 'Not Provided';
+    // Ensure the data is being fetched correctly
+    $firstname = isset($user['Firstname']) ? htmlspecialchars($user['Firstname']) : 'Not Provided';
+    $lastname = isset($user['Lastname']) ? htmlspecialchars($user['Lastname']) : 'Not Provided';
     $email = isset($user['Email']) ? htmlspecialchars($user['Email']) : 'Not Provided';
     $phone_num = isset($user['Phone_num']) ? htmlspecialchars($user['Phone_num']) : 'N/A';
     $municipality = isset($user['Municipality']) ? htmlspecialchars($user['Municipality']) : 'Not Provided';
     $barangay = isset($user['Barangay']) ? htmlspecialchars($user['Barangay']) : 'Not Provided';
     $phase = isset($user['Phase']) ? htmlspecialchars($user['Phase']) : 'N/A';
 } else {
-    header("Location: error.php?message=User not found");
+    echo "No data found for the user!";
     exit();
 }
+
 
 $stmt->close();
 $conn->close();
@@ -45,8 +47,8 @@ $conn->close();
     <link rel="icon" href="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
     <title>Account Details</title>
-    <link rel="stylesheet" href="../css/account.css">
-    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="css/account.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
 <header>
@@ -96,6 +98,6 @@ $conn->close();
         </div>
     </div>
 </main>
-<script src="../js/account.js"></script>
+<script src="js/account.js"></script>
 </body>
 </html>

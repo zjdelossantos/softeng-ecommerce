@@ -27,8 +27,8 @@ $subtotal = 0;
     <title>Checkout</title>
     <link rel="icon" href="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/checkout.css">
-    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
     <header>
@@ -40,7 +40,6 @@ $subtotal = 0;
                 <li><a href="index.php#about-us">About</a></li>
                 <?php if (isset($_SESSION['Username'])): ?>
                     <li><a href="account.php">Account</a></li>
-                    <li><a href="logout.php">Log Out</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Log In/Sign Up</a></li>
                 <?php endif; ?>

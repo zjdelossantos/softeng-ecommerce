@@ -63,14 +63,6 @@ window.onclick = function(event) {
     }
 }
 
-// Add to cart functionality (dummy placeholder)
-// function addToCart() {
-//     const quantity = document.querySelector('.number').textContent;
-//     alert('Added ' + quantity + ' item(s) to the cart.');
-//     // Here, you can implement the logic to add the product to the shopping cart.
-// }
-
-// Show the button when scrolling down
 window.onscroll = function() {
     const button = document.getElementById('backToTop');
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
@@ -88,4 +80,5 @@ document.getElementById('backToTop').addEventListener('click', function(event) {
         behavior: 'smooth' // Smooth scroll
     });
 });
+
 

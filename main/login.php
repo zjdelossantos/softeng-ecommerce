@@ -54,8 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" href="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
     <title>Cuddle Paws Login</title>
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
     <header>
@@ -82,7 +82,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <main>
         <div class="login-container">
             <div class="login-box">
-                <h1>Cuddle Paws</h1>
+                <h1>
+                    <span class="first-color">Cuddle</span>
+                    <span class="second-color">Paws</span>
+                </h1>
                 <?php if (!empty($alert_message)): ?>
                     <div class="alert <?php echo strpos($alert_message, 'successful') !== false ? 'success' : ''; ?>">
                         <?php echo $alert_message; ?>
@@ -103,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </main>
-    <script src="../js/loginpassw.js"></script>
+    <script src="js/loginpassw.js"></script>
 
 </body>
 </html>

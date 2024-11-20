@@ -14,15 +14,15 @@ if (!isset($_SESSION['Username'])) {
     <title>Sign Up Success</title>
     <link rel="icon" href="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/signupsuccess.css">
+    <link rel="stylesheet" href="css/signupsuccess.css">
 </head>
 <body>
     <div class="success-message">
-        <img src="../public/pets.png" alt="Corgi and Cat" class="top-image">
+        <img src="public/pets.png" alt="Corgi and Cat" class="top-image">
         <h1>Account Successfully Created</h1>
         <p>Welcome to Cuddle Paws!</p>
         <p>Redirecting to the homepage...</p>
     </div>
 </body>
-<script src="../js/signupsuccess.js"></script>
+<script src="js/signupsuccess.js"></script>
 </html>

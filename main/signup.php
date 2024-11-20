@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstname = $_POST['Firstname'];
-    $lastname = $_POST['Lastname'];
+    $lastname = $_POST['Lastname'];    
     $email = $_POST['Email'];
     $phone_num = $_POST['Phone_Num'];
     $municipality = $_POST['Municipality'];
@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="icon" href="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
     <title>Cuddle Paws Sign Up</title>
-    <link rel="stylesheet" href="../css/signup.css">
-    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
     <header>

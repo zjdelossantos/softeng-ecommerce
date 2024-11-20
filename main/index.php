@@ -9,8 +9,8 @@ session_start(); // Start session to access login state
     <title>Home</title>
     <link rel="icon" href="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 <header>
@@ -95,7 +95,7 @@ session_start(); // Start session to access login state
         <p class="footer-bottom">For educational purposes only</p>
         <p class="footer-bottom">&copy;2024 Cuddle Paws. All rights reserved.</p>
     </footer>
-    <script src="../js/updatedNav.js"></script>
+    <script src="js/updatedNav.js"></script>
 
 </body>
 </html>

@@ -39,10 +39,10 @@ body {
 
 .account-detail h3 {
     color: #7a4507;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     margin-top: 50px;
-    text-align: left;
-    font-weight: 600;
+    text-align: center;
+    font-weight: 500;
     transition: color 0.3s ease;
 }
 
