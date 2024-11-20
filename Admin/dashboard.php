@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,9 +7,30 @@
     <link rel="icon" href="https://res.cloudinary.com/dakq2u8n0/image/upload/v1726737021/logocuddlepaws_pcj2re.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="dashboard.css">
-
 </head>
 <body>
+    <?php
+    $servername = "localhost";
+    $username = "root"; 
+    $password = "";    
+    $dbname = "cuddlepaws"; 
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT COUNT(*) AS user_count FROM users";
+    $result = $conn->query($sql);
+    $userCount = 0;
+
+    if ($result && $row = $result->fetch_assoc()) {
+        $userCount = $row['user_count'];
+    }
+
+    $conn->close();
+    ?>
     <header>
         <nav>
             <div class="logo">
@@ -39,7 +60,7 @@
                         <p>Let's manage your site and keep everything running smoothly.</p>
                     </div>
                     <div class="card registered-users">
-                        <h2>1</h2>
+                        <h2><?php echo $userCount; ?></h2>
                         <p>Registered Users</p>
                     </div>                    
                     <div class="card orders">
