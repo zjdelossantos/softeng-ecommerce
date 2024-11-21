@@ -14,8 +14,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Use a prepared statement for secure querying
-// Query to fetch user data
+
 $stmt = $conn->prepare("SELECT Firstname, Lastname, Email, Phone_num, Municipality, Barangay, Phase FROM users WHERE Username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
@@ -34,6 +33,7 @@ if ($result->num_rows > 0) {
     echo "No data found for the user!";
     exit();
 }
+
 
 
 $stmt->close();
@@ -82,7 +82,7 @@ $conn->close();
         </div>
     </div>
     <div class="content">
-        <div id="personalDetails" class="content-section-active">
+        <div id="personalDetails" style="display: block;">
             <h3>Personal Details</h3>
             <p><strong>First Name:</strong> <?php echo htmlspecialchars($firstname); ?></p>
             <p><strong>Last Name:</strong> <?php echo htmlspecialchars($lastname); ?></p>
@@ -92,12 +92,25 @@ $conn->close();
             <p><strong>Barangay:</strong> <?php echo htmlspecialchars($barangay); ?></p>
             <p><strong>Phase/Block:</strong> <?php echo htmlspecialchars($phase); ?></p>
         </div>
-        <div id="orders" class="content-section">
-            <!-- <h3>My Orders</h3>
-            <p>You don't have any orders yet!</p> -->
+        <div id="orders" style="display: none;">
+            <h3>My Orders</h3>
+            <?php if (empty($orders)): ?>
+                <p>No orders found.</p>
+            <?php else: ?>
+            <ul>
+                <?php foreach ($orders as $order): ?>
+                <li>
+                    <p><strong>Product Name:</strong> <?php echo htmlspecialchars($order['Product_Name']); ?></p>
+                    <p><strong>Quantity:</strong> <?php echo htmlspecialchars($order['Product_Quantity']); ?></p>
+                    <p><strong>Price:</strong> <?php echo htmlspecialchars($order['Product_Price']); ?></p>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
         </div>
     </div>
 </main>
 <script src="js/account.js"></script>
+<script src="js/updatedNav.js"></script>
 </body>
 </html>
