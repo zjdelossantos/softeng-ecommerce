@@ -19,13 +19,13 @@ function updateItemQuantity(index, quantity) {
 
     const price = parsePrice(priceCell.textContent);
     const newTotalPrice = price * quantity;
-    totalPriceCell.textContent = `₱ ${newTotalPrice.toFixed(2)}`; // Update item's total price
+    totalPriceCell.textContent = formatPrice(newTotalPrice); // Update item's total price
 
     // Recalculate the total price of the cart
     updateTotalPrice();
 }
 
-// Function to recalculate the cart's total price
+
 function updateTotalPrice() {
     const checkboxes = document.querySelectorAll('input[name="cart-item-checkbox"]:checked');
     let total = 0;
@@ -37,9 +37,15 @@ function updateTotalPrice() {
         total += itemTotal;
     });
 
-    // Update the total price element
-    document.querySelector('.total-amount').textContent = `₱ ${total.toFixed(2)}`;
+    // Update the total price element with the formatted price
+    document.querySelector('.total-amount').textContent = formatPrice(total);
 }
+
+// Function to format the price as ₱ 0.00
+function formatPrice(amount) {
+    return `₱ ${amount.toFixed(2)}`;
+}
+
 
 // Function to handle remove from cart
 document.addEventListener('click', function (e) {
