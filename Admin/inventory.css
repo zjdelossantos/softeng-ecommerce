@@ -212,32 +212,32 @@ header {
 
 .inventory-table th:nth-child(1),
 .inventory-table td:nth-child(1) {
-    width: 15%; /* Product ID */
+    width: 15%; /* Product Name */
 }
 
 .inventory-table th:nth-child(2),
 .inventory-table td:nth-child(2) {
-    width: 25%; /* Product Name */
+    width: 10%; /* Product Category */
 }
 
 .inventory-table th:nth-child(3),
 .inventory-table td:nth-child(3) {
-    width: 20%; /* Category */
+    width: 5%; /* Stocks */
 }
 
 .inventory-table th:nth-child(4),
 .inventory-table td:nth-child(4) {
-    width: 10%; /* Quantity */
+    width: 5%; /* Price */
 }
 
 .inventory-table th:nth-child(5),
 .inventory-table td:nth-child(5) {
-    width: 10%; /* Stocks */
+    width: 5%; /* Image */
 }
 
 .inventory-table th:nth-child(6),
 .inventory-table td:nth-child(6) {
-    width: 10%; /* Price */
+    width: 10%; /* Description */
 }
 
 .inventory-table th:nth-child(7),
@@ -276,3 +276,22 @@ header {
 .cancel-btn:hover{
     background-color: #424141;
 }
+
+.inventory-table {
+    width: 100%;
+    table-layout: fixed; /* Ensures the table takes up only the necessary space */
+}
+
+.inventory-table th, .inventory-table td {
+    padding: 8px;
+    text-align: left;
+    overflow: hidden; /* Hide anything that overflows */
+    text-overflow: ellipsis; /* Show "..." for overflowing text */
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.inventory-table td img {
+    width: 50px; /* Limit the image width */
+    height: auto; /* Maintain aspect ratio */
+}
+
