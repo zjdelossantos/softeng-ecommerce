@@ -1,60 +1,90 @@
 <?php
-$servername = "localhost"; 
-$username = "root"; 
-$password = ""; 
-$dbname = "cuddlepaws"; 
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$servername = "localhost";
+$username = "root";
+$password = ""; 
+$database = "cuddlepaws";
+
+$conn = new mysqli($servername, $username, $password, $database);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     if (isset($_POST['update_product'])) {
-        $product_id = $_POST['product_id'];
-        $product_name = $_POST['product_name'];
-        $product_category = $_POST['product_category'];
-        $product_stocks = $_POST['product_stocks'];
-        $product_price = $_POST['product_price'];
 
-        $stmt = $conn->prepare("UPDATE products SET Product_Name = ?, Product_Category = ?, Product_Stocks = ?, Product_Price = ? WHERE Product_Id = ?");
-        $stmt->bind_param("ssdii", $product_name, $product_category, $product_stocks, $product_price, $product_id);
+        $productId = $_POST['product_id'];
+        $productName = $_POST['product_name'];
+        $productCategory = isset($_POST['product_category']) ? trim($_POST['product_category']) : null;
+        $productStocks = $_POST['product_stocks'];
+        $productPrice = $_POST['product_price'];
+        $productImageUrl = $_POST['product_imageurl'];
+        $productDescription = $_POST['product_description'];
 
+        if (empty($productCategory)) {
+            die(json_encode(['status' => 'error', 'message' => 'Product category is required.']));
+        }
+
+        error_log("Product Category: " . $productCategory);
+
+        $stmt = $conn->prepare("UPDATE products SET 
+            Product_Name = ?, 
+            Product_Description = ?, 
+            Product_ImageUrl = ?, 
+            Product_Category = ?, 
+            Product_Stocks = ?, 
+            Product_Price = ? 
+            WHERE Product_Id = ?");
+        $stmt->bind_param("sssdiis", $productName, $productDescription, $productImageUrl, $productCategory, $productStocks, $productPrice, $productId);
+
+        // Execute and provide feedback
         if ($stmt->execute()) {
             echo json_encode(['status' => 'success']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to update product.']);
         }
 
+        // Clean up
         $stmt->close();
         $conn->close();
-        exit; // Exit after handling the update
+        exit;
     }
 
+    // Add new product
     if (isset($_POST['add_product'])) {
-        $product_name = $_POST['product_name'];
-        $product_category = $_POST['product_category'];
-        $product_stocks = $_POST['product_stocks'];
-        $product_price = $_POST['product_price'];
+        // Fetch data
+        $productName = $_POST['product_name'];
+        $productDescription = $_POST['product_description'];
+        $productImageUrl = $_POST['product_imageurl'];
+        $productCategory = isset($_POST['product_category']) ? trim($_POST['product_category']) : null;
+        $productStocks = $_POST['product_stocks'];
+        $productPrice = $_POST['product_price'];
 
-        $stmt = $conn->prepare("INSERT INTO products (Product_Name, Product_Category, Product_Stocks, Product_Price) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssdi", $product_name, $product_category, $product_stocks, $product_price);
+        if (empty($productCategory)) {
+            die(json_encode(['status' => 'error', 'message' => 'Product category is required.']));
+        }
+
+        $stmt = $conn->prepare("INSERT INTO products 
+            (Product_Name, Product_Description, Product_ImageUrl, Product_Category, Product_Stocks, Product_Price) 
+            VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssdis", $productName, $productDescription, $productImageUrl, $productCategory, $productStocks, $productPrice);
 
         if ($stmt->execute()) {
-            echo json_encode(['status' => 'success']);
+            echo json_encode(['status' => 'success', 'product_id' => $stmt->insert_id]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to add product.']);
         }
 
         $stmt->close();
         $conn->close();
-        exit; // Exit after handling the add
+        exit;
     }
 }
 
-// Function to fetch products from the database
-function fetchProducts($conn) {
+function fetchProducts($conn)
+{
     $products = [];
     $sql = "SELECT * FROM products";
     $result = $conn->query($sql);
@@ -66,10 +96,11 @@ function fetchProducts($conn) {
     return $products;
 }
 
-// Fetch initial product list
 $products = fetchProducts($conn);
 $conn->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -123,6 +154,8 @@ $conn->close();
                             <th>Category</th>
                             <th>Stocks</th>
                             <th>Price</th>
+                            <th>Image</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -134,6 +167,8 @@ $conn->close();
                                 <td><?php echo htmlspecialchars($product['Product_Category']); ?></td>
                                 <td><?php echo htmlspecialchars($product['Product_Stocks']); ?></td>
                                 <td><?php echo htmlspecialchars($product['Product_Price']); ?></td>
+                                <td><img src="<?php echo htmlspecialchars($product['Product_ImageUrl']); ?>" alt="Product Image" style="max-width: 100px; height: auto;"></td>
+                                <td><?php echo htmlspecialchars($product['Product_Description']); ?></td>
                                 <td>
                                     <button type="button" class="edit-btn" data-id="<?php echo $product['Product_Id']; ?>">Edit</button>
                                 </td>
@@ -145,7 +180,7 @@ $conn->close();
         </div>
     </div>
 
-    <script src=inventory.js></script>
+    <script src="inventory.js"></script>
 </body>
 
 </html>
