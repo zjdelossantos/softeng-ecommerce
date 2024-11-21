@@ -2,7 +2,7 @@
 session_start();
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
-$isLoggedIn = isset($_SESSION['user_id']); // Check if the user is logged in
+$isLoggedIn = isset($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +68,8 @@ $isLoggedIn = isset($_SESSION['user_id']); // Check if the user is logged in
                             <?php
                             $price = floatval(preg_replace('/[^\d.]/', '', $item['price'])); // Ensure numeric price
                             ?>
-                            <td><?= htmlspecialchars($price * $item['quantity']) ?></td>
+                            <td><?= "₱ " . number_format($price * $item['quantity'], 2) ?></td>
+
                             <td>
                                 <button class="delete-btn" data-name="<?= htmlspecialchars($item['name']) ?>">Delete</button>
                             </td>
