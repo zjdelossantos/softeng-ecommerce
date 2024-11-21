@@ -1,12 +1,12 @@
 function showSection(sectionId) {
-    // Hide all sections
-    var sections = document.querySelectorAll('.content-section');
-    sections.forEach(function(section) {
-        section.classList.remove('active');
-    });
+    // Get all sections
+    const personalDetails = document.getElementById('personalDetails');
+    const orders = document.getElementById('orders');
+
+    // Hide both sections
+    personalDetails.style.display = 'none';
+    orders.style.display = 'none';
 
     // Show the selected section
-    var activeSection = document.getElementById(sectionId);
-    activeSection.classList.add('active');
+    document.getElementById(sectionId).style.display = 'block';
 }
-
